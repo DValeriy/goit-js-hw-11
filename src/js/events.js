@@ -86,3 +86,11 @@ nodes.loadMoreNode.addEventListener('click', async e => {
     );
   }
 });
+
+// for future work
+// const { height = 2 } = document.querySelector('.gallery').firstElementChild.getBoundingClientRect();
+// console.log(height);
+// window.scrollBy({
+//   top: document.querySelector('.gallery').offsetHeight,
+//   behavior: 'smooth',
+// });
