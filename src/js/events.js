@@ -13,7 +13,7 @@ let lightbox = new SimpleLightbox('.gallery a', {
 });
 let searchText;
 let page = 1;
-let limit = 20;
+let limit = 40;
 let totalPages = 0;
 
 nodes.loadMoreNode.classList.add('hidden');
@@ -85,7 +85,7 @@ nodes.loadMoreNode.addEventListener('click', async e => {
   if (hits.length) {
     showImages(hits);
   }
-  if (page >= totalPages) {
+  if (page > totalPages) {
     lightbox.refresh();
     page = 1;
     nodes.loadMoreNode.classList.add('hidden');
