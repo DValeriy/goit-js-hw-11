@@ -38,10 +38,11 @@ const getDataServer = async search => {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.',
     );
-    return { totalHits: 0, hits: [] };
+    return false;
   }
-  // console.log(response);
 };
+
+const checkEndOfPage = async () => {};
 
 nodes.searchForm.addEventListener('submit', async e => {
   e.preventDefault();
@@ -51,7 +52,9 @@ nodes.searchForm.addEventListener('submit', async e => {
   if (!searchText) {
     return false;
   } else {
-    const { totalHits, hits } = await getDataServer(searchText);
+    const data = await getDataServer(searchText);
+    if (!data) return false;
+    const { hits, totalHits } = data;
     if (hits.length) {
       nodes.galleryNode.innerHTML = '';
       showImages(hits);
