@@ -30,24 +30,23 @@ const getDataServer = async search => {
   config.page = page;
   page += 1;
   const params = new URLSearchParams(config);
-  // how do await
+
   try {
     const response = await axios.get(`?${params.toString()}`);
     if (response.status >= 200 && response.status < 300) {
       totalPages = Math.ceil(response.data.totalHits / limit);
       return response.data;
     }
-    throw 'error';
+    throw 'Error request';
   } catch (err) {
-    Notiflix.Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.',
-    );
+    Notiflix.Notify.failure(err);
     return false;
   }
 };
 
 nodes.searchForm.addEventListener('submit', async e => {
   e.preventDefault();
+  nodes.loadMoreNode.classList.add('hidden');
   nodes.galleryNode.innerHTML = '';
   searchText = nodes.inputSearchForm.value.trim();
   page = 1;
@@ -55,15 +54,24 @@ nodes.searchForm.addEventListener('submit', async e => {
     return false;
   } else {
     const data = await getDataServer(searchText);
-    if (!data) return false;
+
+    if (!data) {
+      return false;
+    }
+
     const { hits, totalHits } = data;
+
     if (hits.length) {
       nodes.galleryNode.innerHTML = '';
       showImages(hits);
       Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
       lightbox.refresh();
-      if (page > totalPages) nodes.loadMoreNode.classList.add('hidden');
-      else nodes.loadMoreNode.classList.remove('hidden');
+
+      if (page > totalPages) {
+        nodes.loadMoreNode.classList.add('hidden');
+      } else {
+        nodes.loadMoreNode.classList.remove('hidden');
+      }
     } else {
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.',
