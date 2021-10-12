@@ -93,4 +93,4 @@ var t=arguments[3];function e(t){return(e="function"==typeof Symbol&&"symbol"==t
 },{"axios":"dZBD","notiflix":"ja4j","lodash":"B1iE","../json/config.json":"ge4D","./markup":"tW6H","simplelightbox":"yx6k","simplelightbox/dist/simple-lightbox.min.css":"clu1"}],"Focm":[function(require,module,exports) {
 "use strict";require("./sass/main.scss"),require("./js/function"),require("./js/markup"),require("./js/events");
 },{"./sass/main.scss":"clu1","./js/function":"clu1","./js/markup":"tW6H","./js/events":"bPgr"}]},{},["Focm"], null)
-//# sourceMappingURL=/goit-js-hw-11/src.58f3421a.js.map
+//# sourceMappingURL=/goit-js-hw-11/src.1d223b69.js.map
