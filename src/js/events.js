@@ -6,7 +6,11 @@ import { nodes, showImages } from './markup';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-let lightbox = new SimpleLightbox('.gallery a', {});
+let lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+});
 let searchText;
 let page = 1;
 let limit = 20;
@@ -41,8 +45,6 @@ const getDataServer = async search => {
     return false;
   }
 };
-
-const checkEndOfPage = async () => {};
 
 nodes.searchForm.addEventListener('submit', async e => {
   e.preventDefault();
