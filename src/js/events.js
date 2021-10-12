@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 import Notiflix from 'notiflix';
 import { debounce } from 'lodash';
 import { baseUrl, apiKey } from '../json/config.json';
@@ -9,7 +9,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 let lightbox = new SimpleLightbox('.gallery a', {});
 let searchText;
 let page = 1;
-let limit = 40;
+let limit = 20;
 let totalPages = 0;
 
 nodes.loadMoreNode.classList.add('hidden');
@@ -27,21 +27,28 @@ const getDataServer = async search => {
   page += 1;
   const params = new URLSearchParams(config);
   // how do await
-  const response = await axios(`?${params.toString()}`);
-
-  if (response.status >= 200 && response.status <= 300) {
-    totalPages = Math.ceil(response.data.totalHits / limit);
-    return response.data;
+  try {
+    const response = await axios.get(`?${params.toString()}`);
+    if (response.status >= 200 && response.status < 300) {
+      totalPages = Math.ceil(response.data.totalHits / limit);
+      return response.data;
+    }
+    throw 'error';
+  } catch (err) {
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.',
+    );
+    return { totalHits: 0, hits: [] };
   }
-  return Promise.reject('error');
+  // console.log(response);
 };
 
 nodes.searchForm.addEventListener('submit', async e => {
   e.preventDefault();
+  nodes.galleryNode.innerHTML = '';
   searchText = nodes.inputSearchForm.value.trim();
   page = 1;
   if (!searchText) {
-    nodes.galleryNode.innerHTML = '';
     return false;
   } else {
     const { totalHits, hits } = await getDataServer(searchText);
