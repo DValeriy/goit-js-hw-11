@@ -81,9 +81,7 @@ nodes.loadMoreNode.addEventListener('click', async e => {
     lightbox.refresh();
     page = 1;
     nodes.loadMoreNode.classList.add('hidden');
-    return Notiflix.Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.',
-    );
+    return Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
   }
 });
 
